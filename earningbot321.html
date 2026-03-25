@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earn Money - Telegram Mini App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src='//libtl.com/sdk.js' data-zone='10786203' data-sdk='show_10786203'></script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--tg-theme-bg-color, #f0f2f5);
+            color: var(--tg-theme-text-color, #333);
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .balance-card {
+            background: linear-gradient(135deg, #0088cc, #005580);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .balance-amount {
+            font-size: 32px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .ad-section {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .ad-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+        .ad-btn:active { transform: scale(0.98); }
+    </style>
+</head>
+<body>
+
+    <div class="balance-card">
+        <div>  </div>
+        <div class="balance-amount"> <span id="userBalance">0.00</span></div>
+    </div>
+
+    <div class="ad-section">
+        <h3>   </h3>
+        <p>    . </p>
+        <button class="ad-btn" onclick="startAdProcess()"> </button>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        // .     (   )
+        let currentBalance = parseFloat(localStorage.getItem('user_balance')) || 0;
+        document.getElementById('userBalance').innerText = currentBalance.toFixed(2);
+
+        function startAdProcess() {
+            // Monetag Ad Show
+            if (typeof show_10786203 === 'function') {
+                show_10786203().then(() => {
+                    //       
+                    updateBalance(0.30);
+                }).catch((err) => {
+                    tg.showAlert("      ");
+                });
+            } else {
+                tg.showAlert("   ");
+            }
+        }
+
+        // .      
+        function updateBalance(amount) {
+            currentBalance += amount;
+            
+            //   (LocalStorage)  
+            localStorage.setItem('user_balance', currentBalance.toFixed(2));
+            
+            //   
+            document.getElementById('userBalance').innerText = currentBalance.toFixed(2);
+            
+            //  
+            tg.showAlert("!  .  ");
+        }
+    </script>
+</body>
+</html>
